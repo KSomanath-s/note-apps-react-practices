@@ -4,17 +4,19 @@ const FormInput = () => {
 
     const [title, setTitle] = useState('');
     const [description, setDescription] = useState("")
-
     const [task, setTask] = useState([])
 
+    // Handling Title Filed
     const handleInput = (val) => {
         setTitle(val);
     }
 
+    // Handling Description Filed
     const handleDescription = (val) => {
         setDescription(val);
     }
 
+    // Form Submit Filed
     const formHandler = (e) => {
         e.preventDefault();
         // console.log("Title:", title);
