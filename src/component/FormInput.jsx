@@ -1,10 +1,21 @@
-import React, { useState } from 'react'
-
+import React, { useEffect, useState } from 'react'
+import { MdDelete } from "react-icons/md";
 const FormInput = () => {
 
     const [title, setTitle] = useState('');
-    const [description, setDescription] = useState("")
-    const [task, setTask] = useState([])
+    const [description, setDescription] = useState("");
+
+
+    const [task, setTask] = useState(() => {
+        const saved = localStorage.getItem("task");
+        return saved ? JSON.parse(saved) : [];
+    });
+
+    useEffect(() => {
+        localStorage.setItem("task", JSON.stringify(task));
+    }, [task]);
+
+
 
     // Handling Title Filed
     const handleInput = (val) => {
@@ -15,6 +26,10 @@ const FormInput = () => {
     const handleDescription = (val) => {
         setDescription(val);
     }
+
+
+
+
 
     // Form Submit Filed
     const formHandler = (e) => {
@@ -37,6 +52,19 @@ const FormInput = () => {
 
 
     }
+
+    const deleteNote = (value) => {
+        console.log(value);
+        const deleteTask = task.filter((_, i) => i !== value);
+        setTask(deleteTask)
+    }
+    //     const deleteNote = (value) => {
+    //     const deleteTask = task.filter((_, i) => i !== value);
+    //     setTask(deleteTask);
+    // };
+
+    // To store data into localstorage
+
 
     return (
         <div>
@@ -74,10 +102,17 @@ const FormInput = () => {
                     task.map((ele, index) => (
                         <div
                             key={index}
-                            className='h-56 w-56 rounded-lg bg-white text-black p-2'
+                            className='h-56 relative w-56 rounded-lg bg-white text-black p-2'
                         >
                             <p className='font-bold'>{ele.title}</p>
                             <p>{ele.description}</p>
+
+                            <div className='absolute right-3 bottom-3'>
+                                <MdDelete
+                                    className='text-2xl cursor-pointer'
+                                    onClick={() => deleteNote(index)}
+                                />
+                            </div>
                         </div>
                     ))
                 ) : (
