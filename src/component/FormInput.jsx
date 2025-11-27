@@ -5,6 +5,7 @@ const FormInput = () => {
     const [title, setTitle] = useState('');
     const [description, setDescription] = useState("");
 
+    // const [task, setTask] = useState([]);
 
     const [task, setTask] = useState(() => {
         const saved = localStorage.getItem("task");
